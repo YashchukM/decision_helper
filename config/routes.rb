@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get 'decisions/index'
+
+  get 'decisions/show'
+
+  get 'desicions/index'
+
+  get 'desicions/show'
+
+  get 'decision/index'
+
+  get 'decision/show'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
