@@ -1,0 +1,16 @@
+<div class="mdl-grid">
+  <div class="dec-inp__form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col">
+    <div class="dec-inp__form">
+      <%= form_for(@criterium, url: criteriums_path) do |f| %>
+          <div class="mdl-textfield mdl-js-textfield">
+            <%= f.label :name, class: 'mdl-textfield__label' %>
+            <%= f.text_area :name, class: 'mdl-textfield__input' %>
+          </div>
+
+          <%= f.hidden_field :choice_id %>
+
+          <%= f.submit 'Add', class: 'shop-form-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -49,4 +49,18 @@ module DecisionsHelper
     getMax(result)
   end
 
+  def remember_decision(decision)
+    session[:decision_id] = decision.id
+  end
+
+  def forget_decision
+    session[:decision_id] = nil
+  end
+
+  def current_decision
+    if (decision_id = session[:decision_id])
+      @decision ||= Decision.find(decision_id)
+    end
+  end
+
 end

@@ -7,11 +7,16 @@
       <%= csrf_meta_tags %>
     </head>
 
-    <body>
-    <%= render 'layouts/header' %>
-    <div class="container">
-      <%= yield %>
-      <%= render 'layouts/footer' %>
-    </div>
+    <body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+          <%= render 'layouts/header' %>
+          <main class=class="mdl-layout__content">
+            <% flash.each do |mes_type, mes| %>
+                <div class="alert alert-<%= mes_type %>"><%= mes %></div>
+            <% end %>
+            <%= yield %>
+            <%= render 'layouts/footer' %>
+          </main>
+        </div>
     </body>
 </html>

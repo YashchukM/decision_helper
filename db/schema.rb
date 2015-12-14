@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20151213211843) do
 
   add_index "choices", ["decision_id"], name: "index_choices_on_decision_id"
 
-  create_table "criteria", force: :cascade do |t|
+  create_table "criteriums", force: :cascade do |t|
     t.integer  "importance"
     t.integer  "valuation"
     t.string   "name"

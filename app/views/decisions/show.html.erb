@@ -1,2 +1,19 @@
-<h1>Decisions#show</h1>
-<p>Find me in app/views/decisions/show.html.erb</p>
+<div class="mdl-grid">
+  <div class="dec-inp__form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col"
+        style="max-height: 200px">
+
+    <div id="dec_name">
+      <span><%= @decision.name %></span>
+    </div>
+
+  </div>
+
+  <div id="choices_holder" class="mdl-cell mdl-cell--7-col">
+    <% if @choices.any? %>
+        <%= render @choices %>
+    <% end %>
+
+    <%= button_to 'Add', new_choice_path, method: :get,
+                  class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
+  </div>
+</div>
