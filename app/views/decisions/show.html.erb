@@ -1,19 +1,36 @@
 <div class="mdl-grid">
   <div class="dec-inp__form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col"
-        style="max-height: 200px">
+       style="max-height: 200px">
 
     <div id="dec_name">
       <span><%= @decision.name %></span>
+
+      <%= form_tag @decision, method: :put do %>
+          <div id="hidden_inputs">
+            <% @decision.choices.each do |choice| %>
+                <% choice.criteriums.each do |criterium| %>
+                    <input type="hidden" name="importance[<%= choice.id %>][<%= criterium.id %>]"
+                           value="<%= criterium.importance %>">
+                    <input type="hidden" name="valuation[<%= choice.id %>][<%= criterium.id %>]"
+                           value="<%= criterium.valuation %>">
+                <% end %>
+            <% end %>
+          </div>
+          <%= submit_tag 'Find best' %>
+      <% end %>
     </div>
 
   </div>
 
-  <div id="choices_holder" class="mdl-cell mdl-cell--7-col">
+  <div id="choices_holder" class="mdl-cell mdl-cell--8-col">
+
     <% if @choices.any? %>
         <%= render @choices %>
     <% end %>
 
-    <%= button_to 'Add', new_choice_path, method: :get,
-                  class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
+    <div>
+      <%= button_to 'Add', new_choice_path, method: :get,
+                    class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
+    </div>
   </div>
 </div>

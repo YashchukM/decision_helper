@@ -1,11 +1,19 @@
 <div>
-  <%= criterium.name %>
-  <div style="width: 300px; float: right">
-    <%= range_field_tag :importance, criterium.importance,
-                        class: 'mdl-slider mdl-js-slider', min: '1', max: '10', tabindex: '0', step: '1'%>
-  </div>
-  <div style="width: 300px; float: right">
-    <%= range_field_tag :valuation, criterium.valuation,
-                        class: 'mdl-slider mdl-js-slider', min: '1', max: '10', tabindex: '0', step: '1'%>
-  </div>
+  <tr>
+    <td><%= criterium.name %></td>
+    <td>
+      <div style="width: 240px;">
+        <input class="mdl-slider mdl-js-slider" type="range"
+               name="importance[<%= criterium.choice.id %>][<%= criterium.id %>]"
+               min="1" max="10" value="<%= criterium.importance %>" tabindex="0">
+      </div>
+    </td>
+    <td>
+      <div style="width: 240px;">
+        <input class="mdl-slider mdl-js-slider" type="range"
+               name="valuation[<%= criterium.choice.id %>][<%= criterium.id %>]"
+               min="1" max="10" value="<%= criterium.valuation %>" tabindex="0">
+      </div>
+    </td>
+  </tr>
 </div>
