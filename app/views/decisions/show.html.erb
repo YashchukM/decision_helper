@@ -1,9 +1,9 @@
 <div class="mdl-grid">
-  <div class="dec-inp__form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col"
+  <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--3-col"
        style="max-height: 200px">
 
     <div id="dec_name">
-      <span><%= @decision.name %></span>
+      <div id="decision_name"><%= @decision.name %></div>
 
       <%= form_tag @decision, method: :put do %>
           <div id="hidden_inputs">
@@ -16,7 +16,10 @@
                 <% end %>
             <% end %>
           </div>
-          <%= submit_tag 'Find best' %>
+
+          <div class="btn-center">
+            <%= submit_tag 'Find best', class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
+          </div>
       <% end %>
     </div>
 
@@ -28,8 +31,8 @@
         <%= render @choices %>
     <% end %>
 
-    <div>
-      <%= button_to 'Add', new_choice_path, method: :get,
+    <div style="margin-left: 8px;">
+      <%= button_to 'Add choice', new_choice_path, method: :get,
                     class: 'mdl-button mdl-js-button mdl-button--raised mdl-button--colored' %>
     </div>
   </div>

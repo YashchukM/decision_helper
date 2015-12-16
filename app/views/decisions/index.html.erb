@@ -1,14 +1,14 @@
-<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+<div class="dec-inp__form-card mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
   <h2>Last made decisions</h2>
 
   <div>
-    <table>
+    <table style="margin-left: auto; margin-right: auto;">
       <thead>
       <tr>
-        <th style="width: 400px;">Decision</th>
-        <th>Best absolute</th>
-        <th>Best for user</th>
-        <th>Best balanced</th>
+        <th style="width: 300px;">Decision</th>
+        <th style="width: 150px;">Best absolute</th>
+        <th style="width: 150px;">Best for user</th>
+        <th style="width: 150px;">Best balanced</th>
       </tr>
       </thead>
 
@@ -25,7 +25,7 @@
     </table>
   </div>
 
-  <div>
+  <div style="margin-right: auto; margin-left: auto; margin-top: 20px;margin-bottom: 20px;">
     <%= link_to 'MAKE DECISION', new_decision_path,
                 class: 'add-criteria-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored'%>
   </div>

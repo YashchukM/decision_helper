@@ -8,7 +8,7 @@ class DecisionsController < ApplicationController
 
   def show
     @decision = Decision.find(params[:id])
-    if creator_looks?
+    if creator_looks?(@decision)
       @choices = @decision.choices
     else
       render 'results'
@@ -40,8 +40,7 @@ class DecisionsController < ApplicationController
         v.each { |kk, vv| Criterium.find(kk.to_i).update_attribute(:valuation, vv.to_i) }
       end
 
-      # TODO: Calc results and save into DB(as part of Decision model)
-      evaluate()
+      evaluate
       redirect_to results_url
     else
       logger.info 'Input is incorrect'
@@ -64,8 +63,8 @@ class DecisionsController < ApplicationController
       redirect_to root_url if current_decision.nil?
     end
 
-    def creator_looks?
-      return true if !current_decision.nil? && current_decision.eql?(@decision)
+    def creator_looks?(decision)
+      return true if !current_decision.nil? && current_decision.id == decision.id
       return false
     end
 end

@@ -1,10 +1,5 @@
-html, body {
-  font-family: 'Roboto', 'Helvetica', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
 .dec-inp__form-card.mdl-card {
+  margin-top: 10%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -24,6 +19,32 @@ html, body {
   margin: 10px;
 }
 
+.add-criteria-btn {
+  width: 50%;
+  margin: 10px;
+  margin-left: 25%;
+}
+
 .mdl-textfield {
   width: 100%;
+}
+
+h2, h1 {
+  text-align: center;
+}
+
+#decision_name {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  font-size: x-large;
+}
+
+.btn-center {
+  margin-top: 30px;
+  margin-left: 33%;
+}
+
+#choices_holder > :first-child {
+  margin-top: auto;
 }

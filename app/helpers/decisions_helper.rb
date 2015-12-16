@@ -9,56 +9,32 @@ module DecisionsHelper
   def getMax(val)
     maxVal = val.values[0]
     max = val.keys[0]
-    val.each do |k,v|
-      if (v > maxVal)
-        maxVal = v;
-        max = k
-      end
-    end
+    val.each { |k,v| maxVal = v, max = k if v > maxVal }
     max
   end
 
   def getBestForUser()
-    h = Hash.new
-    params[:importance].each do |k, v|
-      v.each { |kk, vv|
-        if (h[kk] == nil)
-          h[kk] = 0
-        end
-        h[kk] += vv.to_i * params[:valuation][kk].to_i
-      }
-    end
+    h = Hash.new(0)
+    params[:importance].each { |k, v| v.each { |kk, vv| h[k] += vv.to_i * params[:valuation][kk].to_i } }
     current_decision.update_attribute(:best_user_id, getMax(h))
   end
 
   def getBest()
-    h = Hash.new
-    params[:importance].each do |k, v|
-      v.each { |kk, vv|
-        if (h[kk] == nil)
-          h[kk] = 0
-        end
-        h[kk] += vv.to_i
-      }
-    end
+    h = Hash.new(0)
+    params[:importance].each { |k, v| v.each { |kk, vv| h[k] += vv.to_i } }
     current_decision.update_attribute(:best_abs_id, getMax(h))
   end
 
   def getBalanced()
+    h = Hash.new(0)
     coef = 4
     params[:importance].each do |k, v|
-      v.each { |kk, vv|
-        if (h[kk] == nil)
-          h[kk] = 0
-        end
-        if (vv < coef)
-          h[kk] -= (coef - vv.to_i) * params[:valuation][kk].to_i
-        end
-        h[kk] += vv.to_i * params[:valuation][kk].to_i
-      }
+      v.each do |kk, vv|
+        h[k] -= (coef - vv.to_i) * params[:valuation][kk].to_i if vv.to_i < coef
+        h[k] += vv.to_i * params[:valuation][kk].to_i
+      end
     end
     current_decision.update_attribute(:best_balanced_id, getMax(h))
-
   end
 
   def remember_decision(decision)
@@ -70,8 +46,11 @@ module DecisionsHelper
   end
 
   def current_decision
-    if (decision_id = session[:decision_id])
-      @decision ||= Decision.find(decision_id)
+    decision_id = session[:decision_id]
+    unless (decision_id.nil?)
+      @decision = Decision.find(decision_id)
+    else
+      nil
     end
   end
 
