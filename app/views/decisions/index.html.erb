@@ -1,0 +1,32 @@
+<div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+  <h2>Last made decisions</h2>
+
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th style="width: 400px;">Decision</th>
+        <th>Best absolute</th>
+        <th>Best for user</th>
+        <th>Best balanced</th>
+      </tr>
+      </thead>
+
+      <tbody>
+        <% @decisions.each do |d| %>
+          <tr>
+            <th><%= link_to d.name, d %></th>
+            <th><%= d.best_abs.name %></th>
+            <th><%= d.best_user.name %></th>
+            <th><%= d.best_balanced.name %></th>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div>
+    <%= link_to 'MAKE DECISION', new_decision_path,
+                class: 'add-criteria-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored'%>
+  </div>
+</div>

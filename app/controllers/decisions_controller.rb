@@ -3,7 +3,7 @@ class DecisionsController < ApplicationController
   before_action :only_current, only: [:results, :update]
 
   def index
-  #   TODO: last decisions made
+    @decisions = Decision.where('best_abs_id IS NOT NULL').limit(5).order('created_at desc')
   end
 
   def show
@@ -45,8 +45,8 @@ class DecisionsController < ApplicationController
       redirect_to results_url
     else
       logger.info 'Input is incorrect'
-      flash.now[:danger] = 'Input is incorrect'
-      render 'show'
+      flash[:danger] = 'Input is incorrect'
+      redirect_to current_decision
     end
   end
 
