@@ -1,11 +1,18 @@
 class DecisionsController < ApplicationController
-  def index
 
+  before_action :only_current, only: [:results, :update]
+
+  def index
+  #   TODO: last decisions made
   end
 
   def show
     @decision = Decision.find(params[:id])
-    @choices = @decision.choices
+    if creator_looks?
+      @choices = @decision.choices
+    else
+      render 'results'
+    end
   end
 
   def create
@@ -24,18 +31,41 @@ class DecisionsController < ApplicationController
   end
 
   def update
-    params[:importance].each do |k, v|
-      v.each { |kk, vv| Criterium.find(kk.to_i).update_attribute(:importance, vv.to_i) }
+    if correct_input?
+      logger.info 'Input is correct'
+      params[:importance].each do |k, v|
+        v.each { |kk, vv| Criterium.find(kk.to_i).update_attribute(:importance, vv.to_i) }
+      end
+      params[:valuation].each do |k, v|
+        v.each { |kk, vv| Criterium.find(kk.to_i).update_attribute(:valuation, vv.to_i) }
+      end
+
+      # TODO: Calc results and save into DB(as part of Decision model)
+
+      redirect_to results_url
+    else
+      logger.info 'Input is incorrect'
+      flash.now[:danger] = 'Input is incorrect'
+      render 'show'
     end
-    params[:valuation].each do |k, v|
-      v.each { |kk, vv| Criterium.find(kk.to_i).update_attribute(:valuation, vv.to_i) }
-    end
-    redirect_to current_decision
+  end
+
+  def results
+    @decision = current_decision
   end
 
   private
 
     def decision_params
       params.require(:decision).permit(:name)
+    end
+
+    def only_current
+      redirect_to root_url if current_decision.nil?
+    end
+
+    def creator_looks?
+      return true if !current_decision.nil? && current_decision.eql?(@decision)
+      return false
     end
 end

@@ -63,4 +63,11 @@ module DecisionsHelper
     end
   end
 
+  def correct_input?
+    return false if params[:importance].nil? || params[:valuation].nil?
+    params[:importance].each { |k, choice| return false if choice.empty? }
+    params[:valuation].each { |k, choice| return false if choice.empty? }
+    return true
+  end
+
 end
