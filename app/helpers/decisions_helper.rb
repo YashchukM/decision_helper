@@ -1,52 +1,64 @@
 module DecisionsHelper
 
-  def evaluate(importance, value)
-    result = Array.new(3)
-    result[0] = getBestForUser(importance, value)
-    result[1] = getBest(value)
-    result[2] = getBalanced(importance, value)
-    result
+  def evaluate()
+    getBestForUser()
+    getBest()
+    getBalanced()
   end
 
   def getMax(values)
+    maxVal = values.first
     max = 0
-    maxValue = values[0]
-    for i in (0..(values.size - 1))
-      if (values[i] > maxValue)
-        maxValue = values[i]
-        max = i
+    values.each do |k,v|
+      if (v > maxVal)
+        maxVal = v;
+        max = k
       end
     end
     max
   end
 
-  def getBestForUser(importance, value)
-    result = Array.new(size=importance.size, 0)
-    for i in (0..(importance.size - 1))
-      result[i] += importance[i] * value[i];
+  def getBestForUser()
+    h = Hash.new
+    params[:importance].each do |k, v|
+      v.each { |kk, vv|
+        if (h[kk] == nil)
+          h[kk] = 0
+        end
+        h[kk] += vv.to_i * params[:valuation][kk].to_i
+      }
     end
-    getMax(result)
+    current_decision.update_attribute(:best_user_id, getMax(h))
   end
 
-  def getBest(value)
-    result = Array.new(size = value.size, 0)
-    for i in (0..(value.size - 1))
-      result[i] += value[i];
+  def getBest()
+    h = Hash.new
+    params[:importance].each do |k, v|
+      v.each { |kk, vv|
+        if (h[kk] == nil)
+          h[kk] = 0
+        end
+        h[kk] += vv.to_i
+      }
     end
-    getMax(result)
+    current_decision.update_attribute(:best_abs_id, getMax(h))
   end
 
-  def getBalanced(importance, value)
+  def getBalanced()
     coef = 4
-    result = Array.new(size=importance.size, 0)
-    for i in (0..(importance.size - 1))
-      if (value[i] < coef)
-        result[i] -= (coef - value[i]) * importance[i];
-      else
-        result[i] += importance[i] * value[i]
-      end
+    params[:importance].each do |k, v|
+      v.each { |kk, vv|
+        if (h[kk] == nil)
+          h[kk] = 0
+        end
+        if (vv < coef)
+          h[kk] -= (coef - vv.to_i) * params[:valuation][kk].to_i
+        end
+        h[kk] += vv.to_i * params[:valuation][kk].to_i
+      }
     end
-    getMax(result)
+    current_decision.update_attribute(:best_balanced_id, getMax(h))
+
   end
 
   def remember_decision(decision)
