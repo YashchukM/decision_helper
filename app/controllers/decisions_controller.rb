@@ -41,7 +41,7 @@ class DecisionsController < ApplicationController
       end
 
       # TODO: Calc results and save into DB(as part of Decision model)
-
+      evaluate()
       redirect_to results_url
     else
       logger.info 'Input is incorrect'
