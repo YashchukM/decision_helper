@@ -6,10 +6,10 @@ module DecisionsHelper
     getBalanced()
   end
 
-  def getMax(values)
-    maxVal = values.first
-    max = 0
-    values.each do |k,v|
+  def getMax(val)
+    maxVal = val.values[0]
+    max = val.keys[0]
+    val.each do |k,v|
       if (v > maxVal)
         maxVal = v;
         max = k
